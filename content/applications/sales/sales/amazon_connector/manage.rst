@@ -53,6 +53,29 @@ turn, notify the customer that the order (or a part of it) is on its way.
 .. seealso::
    - :doc:`../../../inventory_and_mrp/inventory/shipping/setup/third_party_shipper`
 
+.. _manage/manage_delivery_errors:
+
+Manage errors when synchronizing the deliveries
+-----------------------------------------------
+
+When Odoo verifies that all the information sent to Amazon are correctly processed, it can happen
+that Amazon failed to do so. In that case, Odoo send an email listing all the shipments that failed
+and the errors Amazon sent with it. In addition, these shipment will be flagged with a
+:guilabel:`Synchronization with Amazon failed` tag.
+
+Usually, the error will be clear enough for you to correct the problem, so you either manage this
+order directly in Amazon backend, or you correct the problem in Odoo and synchronize the shipment
+again using the :guilabel:`Retry Amazon Sync` button.
+
+.. note::
+   It might happen that Odoo receive as notification from Amazon saying that some delivery
+   information were not processed, but without saying which ones. In that case, all the shipments
+   in an unknown state will be treated as if they failed to be synchronized. Once Odoo get a
+   notification from Amazon saying that a shipment was processed, its tag will changed to
+   :guilabel:`Synchronized with Amazon`. You can speed up this information either by forcing the
+   synchronization of all your orders sooner, or by asking to :guilabel:`Recover Order` and entering
+   the concerned Amazon Order Reference.
+
 Follow deliveries in FBA
 ========================
 
