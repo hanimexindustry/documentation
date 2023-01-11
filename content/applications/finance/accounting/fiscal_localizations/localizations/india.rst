@@ -22,6 +22,9 @@ localization:
    * - :guilabel:`Indian E-invoice Integration`
      - `l10n_in_edi`
      - :ref:`Indian e-invoicing integration <india/e-invoicing>`
+   * - :guilabel:`Indian E-Waybill Integration`
+     - `l10n_in_edi_ewaybill`
+     - :ref:`Indian E-Waybill integration <india/e-waybill>`
 
 .. _india/e-invoicing:
 
@@ -187,3 +190,152 @@ website.
    .. image:: india/signed-invoice.png
       :align: center
       :alt: verified e-invoice
+
+.. _india/e-waybill:
+
+Indian E-Waybill
+==================
+
+Odoo is compliant with the **Indian Good and Services Tax (GST) E-Waybill system** requirements.
+
+.. important::
+   Indian E-Waybill is available from Odoo 15.0. If needed, :doc:`upgrade
+   </administration/upgrade>` your database.
+
+.. _india/e-waybill-api:
+
+API Registration on your NIC E-Waybill web portal
+--------------------------------------------------
+
+You must register on the **NIC E-Waybill** web portal to create your **API credentials**. You need
+these credentials to :ref:`configure your Odoo Accounting app <india/e-waybill-configuration>`.
+
+#. Login to the NIC E-Waybill web portal on - https://ewaybillgst.gov.in/ by clicking on
+   :guilabel:`Login` and entering your :guilabel:`Username` and :guilabel:`Password`.
+
+   .. image:: india/e-waybill-system-login.png
+      :align: center
+      :alt: E-Waybill login
+
+#. From your dashboard, go to :menuselection:`Registration --> For Gsp`.
+
+   .. image:: india/e-waybill-registration.png
+      :align: center
+      :alt: E-Waybill registration
+
+#. Click Send OTP, you receive an :abbr:`OTP (one-time password)` code to your registered mobile number.
+
+   .. image:: india/e-waybill-gsp-registration.png
+      :align: center
+      :alt: E-Waybill GSP options
+
+#. Enter the OTP code and click on :guilabel:`Verify OTP`.
+
+   .. image:: india/verify-otp.png
+      :align: center
+      :alt: E-Waybill verify otp
+
+#. Check If :guilabel:`Tera Software Limited` is already in List of GSP/ERP Registered.If it is already in list
+   then use that username and password else continue to next steps.
+
+   .. image:: india/e-waybill-gsp-list.png
+      :align: center
+      :alt: E-Waybill added GSP
+
+#. Select :guilabel:`Add/New`, select :guilabel:`Tera Software Limited` as your GSP Name, and create
+   :guilabel:`Username` and :guilabel:`Password` for your API.
+
+   .. image:: india/submit-gsp-api-registration-details.png
+      :align: center
+      :alt: Submit GSP api registration details
+
+#. Click on :guilabel:`Add`.
+
+
+.. _india/e-waybill-configuration:
+
+Configuration on Odoo
+---------------------
+
+To set up the E-Waybill service, go to :menuselection:`Accounting --> Configuration --> Settings -->
+Indian Electronic WayBill`, and enter the :guilabel:`Username` and :guilabel:`Password`.
+
+.. image:: india/e-waybill-setup.png
+   :align: center
+   :alt: E-Waybill setup odoo
+
+.. _india/e-waybill-workflow:
+
+Workflow
+--------
+
+To start E-waybill from Odoo, an invoice/bill must be created with details of E-waybill using the standard
+invoicing/bill flow, that is either from a sales/purchase order or the invoice/bill menu in the Accounting
+application.
+
+.. _india/e-waybill-send:
+
+Send E-waybill
+~~~~~~~~~~~~~~
+
+.. important::
+   If E-waybill (IN) is selected in, :ref:`Sale/Purchase Journal <india/e-invoicing-journals>` then E-waybill will
+   be sent automatically when the invoice/bill is confirmed.
+   If you don't want to send E-waybill when confirming the invoice/bill, don't select E-waybill (IN).
+
+There will be button on invoice/bill to send E-Waybill.
+
+.. image:: india/invoice-send-e-waybill-button.png
+   :align: center
+   :alt: Invoice send E-waybill button
+
+.. _india/invoice-validation-e-way:
+
+Invoice validation
+~~~~~~~~~~~~~~~~~~
+
+Once the invoice is validated and :guilabel:`SEND E-WAYBILL` is clicked, a confirmation message will be
+displayed at the top.
+
+Odoo automatically uploads the JSON-signed file to the government portal after a while. If you want
+to process the invoice immediately, you can click on :guilabel:`Process Now`.
+
+.. image:: india/e-waybill-process.png
+   :align: center
+   :alt: Indian e-waybill confirmation message: "The invoice will be processed asynchronously by
+         the following E-waybill service : E-waybill (IN)"
+
+.. note::
+   - You can find the JSON-signed file in the attached files, in the chatter.
+
+
+Invoice PDF Report
+~~~~~~~~~~~~~~~~~~
+
+Once the E-waybill is submitted, you can print the invoice PDF report. The report includes the
+E-waybill Number and E-waybill validity date.
+
+.. image:: india/invoice-report-e-waybill.png
+   :align: center
+   :alt: E-waybill acknowledgment number and date
+
+.. _india/e-waybill-cancellation:
+
+E-waybill Cancellation
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to cancel an e-waybill, go to the :guilabel:`e-WayBill` tab of the invoice and fill out
+the :guilabel:`Cancel reason` and :guilabel:`Cancel remarks` fields. Then, click on
+:guilabel:`Request EDI Cancellation`.
+
+.. image:: india/e-waybill-cancellation.png
+   :align: center
+   :alt: cancel reason and remarks
+
+.. note::
+   If you want to abort the cancellation before processing the invoice, then click on
+   :guilabel:`Call Off EDI Cancellation`.
+
+Once you request to cancel the e-waybill, Odoo automatically submits the JSON Signed file to the
+government portal. If you want to process the invoice immediately, you can process it by clicking on
+:guilabel:`Process Now`.
