@@ -1162,3 +1162,21 @@ footer {
 
     }
 }
+
+.o_toctree_card {
+
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
+
+        .card {
+            background-color: rgba($teal-100, 0.2);
+        }
+
+    }
+
+    .card {
+        transition: all 200ms;
+    }
+
+}
