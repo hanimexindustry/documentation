@@ -22,6 +22,9 @@ localization:
    * - :guilabel:`Indian E-invoice Integration`
      - `l10n_in_edi`
      - :ref:`Indian e-invoicing integration <india/e-invoicing>`
+   * - :guilabel:`Indian GST Return Filing using IAP`
+     - `l10n_in_reports_gstr`
+     - :ref:`Indian GST Return Filing <india/gstr>`
 
 .. _india/e-invoicing:
 
@@ -187,3 +190,177 @@ website.
    .. image:: india/signed-invoice.png
       :align: center
       :alt: verified e-invoice
+
+.. _india/gstr:
+
+Indian GST Return Filing
+========================
+
+Odoo supports **Indian Good and Services Tax (GST) return filing** requirements.
+
+.. _india/gstr_api:
+
+Enable API Access
+-----------------
+
+You must enable API Access On the GST Portal.
+
+#. Login to the :guilabel:`GST Portal` on - https://services.gst.gov.in/services/login by entering your
+   :guilabel:`Username` and :guilabel:`Password`.
+
+   .. image:: india/gst-portal-login.png
+      :align: center
+      :alt: Register On GST portal
+
+#. Now, go to :guilabel:`My Profile`.
+
+   .. image:: india/
+      :align: center
+      :alt: Click On the My Profile from profile
+
+#. Select :guilabel:`Manage API Access`.
+
+   .. image:: india/
+      :align: center
+      :alt: select Manage API access under the Quick Links.
+
+#. Click :guilabel:`Yes` To Enable API Access.
+
+   .. image:: india/
+      :align: center
+      :alt: Click Yes
+
+#. Now, You will be able to see duration dropdown menu. Select :guilabel:`duration` of your preference.
+
+   .. image:: india/
+      :align: center
+      :alt: dropdown list for duration
+
+#. Now, :guilabel:`Confirm` it. You are all set to configure it in odoo :ref:`Configure Your Odoo Indian GST Service <india/gstr_configuration>`.
+
+   .. image:: india/
+      :align: center
+      :alt: confirm the duration choice
+
+.. _india/gstr_configuration:
+
+Configuration Of Indian GST Service In Odoo
+-------------------------------------------
+
+#. To set up the Indian GST service, go to :menuselection:`Accounting --> Configuration --> Settings -->
+Indian GST Service`, and enter the :guilabel:`GST Username`. then click on the :guilabel:`send OTP`.
+
+   .. image:: india/gst-setup.png
+      :align: center
+      :alt: Please enter your GST Portal Username as Username
+
+#. You will receive an OTP on the mobile number linked with the GST Account. Kindly enter the OTP and click
+   on the :guilabel:`Validate` Button.
+
+   .. image:: india/gst-otp.png
+      :align: center
+      :alt: Enter the OTP
+
+.. _india/gstr_workflow:
+
+Workflow Of Filing GST Return
+-----------------------------
+
+GST Return Filing using ODOO feature is a 3 step process.
+1. Send GSTR-1(Summary of all Sale invoices made during Return period)
+2. Receive GSTR-2B(Details submited by vendors)
+3. GSTR-3
+
+.. note::
+   You can set the Tax Return Periodicity by navigating to the
+   :menuselection:`Accounting --> Configuration --> Settings --> Taxes` by changing the :guilabel:`Periodicity`.
+
+After Configuration Of Indian GST Service, You can file your GST Return for the specific duration.
+Go to :menuselection:`Accounting --> Reporting --> India --> GST Return Periods` and Create the new GST
+Return Period for prefered month and year.
+
+   .. image:: india/gst-return-period.png
+      :align: center
+      :alt: Create GST Return Period
+
+.. _india/gstr-1
+
+Send GSTR-1
+~~~~~~~~~~~
+
+GSTR-1 is a monthly/quarterly return that summarises all sales(outward supplies) of a taxpayer containing 8 section.
+
+#. The First step of Send GSTR-1 you can verify the GSTR-1 Report before pushing it to the :guilabel:`GSTN`
+   by clicking on the :guilabel:`Verify the GSTR-1 Report`.
+   If GSTR-1 Report is ready to push then you can click on the :guilabel:`Push to GSTN` to push it to the
+   :guilabel:`GST Portal`.
+
+   .. image:: india/gst-gstr-1.png
+      :align: center
+      :alt: GSTR-1
+
+#. Once you click on the :guilabel:`Push to GSTN` then you can see the gstr1_status changes from
+   :guilabel:`To Send` to :menuselection:`Sending --> Waiting for Status --> Sent`. It means that
+   your GSTR-1 report is submitted on :guilabel:`GST Portal`
+
+   .. image:: india/gst-gstr-1-sent.png
+      :align: center
+      :alt: GSTR-1 in the Sent Status
+
+#. Once GSTR-1 state reaches in the :guilabel:`Sent` then you can click on the :guilabel:`Mark as Filed`.
+   Now , you can see your GSTR-1 status as :guilabel:`Filed`.
+
+   .. image:: india/gst-gstr-1-filed.png
+      :align: center
+      :alt: GSTR-1 in the Filed Status
+
+.. _india/gstr-2B
+
+Receive GSTR-2B
+~~~~~~~~~~~~~~~
+
+#. By clicking on :guilabel:`Fetch GSTR-2B Summary` user can conveniently reconcile ITC(Income Tax Credit)
+   with their own Accounts and Records.
+   The input tax credit on purchases from any regular taxpayers and non-resident taxable persons will be available in GSTR-2B.
+   Further, the input tax credit distributed by the input service distributor.
+
+   .. image:: india/gst-gstr-2b.png
+      :align: center
+      :alt: GSTR-2B
+
+#. If your all entries of :guilabel:`GSTR-2B` matches with the your Accounts and Records then state will be :guilabel:`Matched` else
+   :guilabel:`Partially Matched`.
+
+    .. image:: india/gst-gstr-2b-matched.png
+      :align: center
+      :alt: GSTR-2B Matched
+
+#. If state in :guilabel:`Partially Matched` then you can check for the conflict by clicking
+   :guilabel:`View Reconciled Bills`. You can change the bills that makes the conflict while reconciling
+   with the :guilabel:`GSTR-2B`.
+
+   .. note::
+      It may be Possible there may be entries in :guilabel:`GSTR-2B` which creates conflict during reconcilation
+      then solve that entries first.
+
+   .. image:: india/gst-gstr-2b-partially.png
+      :align: center
+      :alt: GSTR-2B Partially Matched
+
+#. After refactoring conflicted bills you can click on :guilabel:`re-match` to again reconcile with :guilabel:`GSTR-2B`.
+
+.. _india/gstr-3
+
+GSTR-3
+~~~~~~
+
+:guilabel:`GSTR-3` is a monthly return with the summarized details of sales, purchases, sales during the month along with the amount of GST liability.
+This return is auto-generated by extracting information from GSTR-1 and GSTR-2.
+GSTR-3 displays the GST liability that taxpayer owes. Taxpayer must pay the tax first and then file the return.
+
+#. In odoo you can verify the :guilabel:`GSTR-3` by clicking :guilabel:`GSTR-3 Report`. You need to
+   validate the :guilabel:`GSTR-3` on :guilabel:`GST Portal`.
+
+   .. image:: india/gst-gstr-3.png
+      :align: center
+      :alt: GSTR-1 in the Filed Status
