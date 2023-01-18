@@ -1,8 +1,15 @@
 :nosearch:
+:hide-toc:
 
 =========
 Tutorials
 =========
+
+.. cards::
+
+   .. card::
+
+      Hello
 
 .. toctree::
     :titlesonly:
